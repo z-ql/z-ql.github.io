@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>博客搭建流程笔记</title>
+    <link href="/2025/01/04/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B%E7%AC%94%E8%AE%B0/"/>
+    <url>/2025/01/04/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B%E7%AC%94%E8%AE%B0/</url>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>​<br> 总路径<br>教程GitHub Pages + Hexo搭建个人博客网站，史上最全教程_hexo博客-CSDN博客</p><p>参考网站配置指南 | Hexo Fluid 用户手册</p><p>图床Image Upload - SM.MS - Simple Free Image Hosting</p><p>遇到的问题与解决办法<br>1.无法上传图片</p><p>解决办法：</p><p>参考官方解决文档：资源文件夹 |Hexo 系列</p><p>需要在_config.yml文件中写入以下内容才能使用markdown语句插入图片</p><p>一定不能完全相信一个博主，遇到这个错误我一直以为是我哪个步骤出错了，反复检查路径名字有没有问题，是不是要用英文？是不是相对路径错了？最后才在看官方文档中发现是博主忘记说要在config.yml中添加marked…所以大家不要完全相信博主的教程，教程也可能有纰漏，如果确定自己和博主的操作一样，多翻一翻官方文档的问题集</p><p>常用指令<br>hexo clean    清除<br>hexo g -d     配置 上传<br>hexo s        本地部署<br>hexo new post 文章标题</p><p>网站：</p><p>配置指南 | Hexo Fluid 用户手册</p><p>​</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>【Q&amp;A】博客网站建立</title>
     <link href="/2025/01/02/%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/"/>
     <url>/2025/01/02/%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/</url>
