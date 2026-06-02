@@ -1,4 +1,4 @@
-# hana-blog
+# zql-blog
 
 面向个人博客站点的 Astro 项目。这个 README 的目标不是介绍博客本身，而是让协作 Agent 在尽量少读文件的前提下，快速知道：
 

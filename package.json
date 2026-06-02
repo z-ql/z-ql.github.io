@@ -77,5 +77,12 @@
   },
   "overrides": {
     "@emmetio/css-parser": "0.5.0"
+  },
+"pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "workerd"
+    ]
   }
 }
