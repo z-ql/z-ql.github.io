@@ -1,0 +1,37 @@
+---
+import PageLayout from '@/layouts/CommonPage.astro'
+import config from '@/site-config'
+
+const headings = [
+  { depth: 2, slug: 'about-me', text: 'About Me' }
+]
+---
+
+<PageLayout title='Academic' {headings} info={{ slug: '/academic', hideComment: true }}>
+  <h2 id='about-me'>About Me<a class='anchor' href='#about-me'>#</a></h2>
+  <p>
+    2023级本科生
+  </p>
+</PageLayout>
+
+<script
+  is:inline
+  type='module'
+  data-astro-rerun
+  define:vars={{ npmCDN: config.npmCDN, walineServer: config.integ.waline.server }}
+>
+  const normalizePath = (path) => {
+    if (path === '/') return path
+    return path.endsWith('/') ? path.slice(0, -1) : path
+  }
+
+  const loadPageviewCount = async () => {
+    const pageview = await import(`${npmCDN}/@waline/client@v3/dist/pageview.js`)
+    pageview.pageviewCount({
+      serverURL: walineServer,
+      path: normalizePath(window.location.pathname)
+    })
+  }
+
+  await loadPageviewCount()
+</script>

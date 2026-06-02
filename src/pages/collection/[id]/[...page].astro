@@ -1,0 +1,103 @@
+---
+import { Image } from 'astro:assets'
+import type { GetStaticPaths, Page } from 'astro'
+import type { CollectionEntry } from 'astro:content'
+
+import { Paginator, PostPreview } from '@/components/pages'
+import {
+  getBlogCollection,
+  getSidebarCollections,
+  getCollectionPostsByKey,
+  sortMDByDateAsc,
+  type SidebarCollection
+} from '@/server'
+import { Button, Icon } from '@/components/user'
+import PageLayout from '@/layouts/BaseLayout.astro'
+import config from '@/site-config'
+
+export const prerender = true
+
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+  const allPosts = await getBlogCollection()
+  const allCollections = getSidebarCollections(allPosts, 'zh')
+
+  return allCollections.flatMap((collection) => {
+    const posts = sortMDByDateAsc(getCollectionPostsByKey(allPosts, collection.key))
+    return paginate(posts, {
+      pageSize: config.content?.blogPageSize || 8,
+      params: { id: collection.key },
+      props: { collection, firstPost: posts[0] }
+    })
+  })
+}
+
+interface Props {
+  page: Page<CollectionEntry<'blog'>>
+  collection: SidebarCollection
+  firstPost?: CollectionEntry<'blog'>
+}
+
+const { page, collection, firstPost } = Astro.props
+const coverImage = firstPost?.data.heroImage
+
+const meta = {
+  description: collection.description,
+  title: `${collection.title} - Collection`
+}
+---
+
+<PageLayout {meta}>
+  <Button title='Back' href='/' style='back' />
+  <main class='mt-6 lg:mt-10'>
+    {
+      coverImage && (
+        <div class='hero-image relative mb-6 animate'>
+          <Image
+            alt={coverImage.alt || collection.title}
+            class='relative z-10 aspect-[21/8] w-full rounded-2xl object-cover object-center'
+            loading='eager'
+            src={coverImage.src}
+            width={coverImage.width || 1200}
+            height={coverImage.height || 630}
+          />
+          <div class='absolute inset-0 z-20 rounded-2xl bg-gradient-to-t from-black/55 via-black/15 to-transparent' />
+          <div class='absolute bottom-4 left-4 z-30 text-white drop-shadow-md'>
+            <p class='text-xs uppercase tracking-wider text-white/80'>Collection</p>
+            <h1 class='text-2xl font-semibold'>{collection.title}</h1>
+          </div>
+        </div>
+      )
+    }
+    <div id='content-header' class='animate'>
+      {!coverImage && (
+        <h1 class='mb-3 flex items-center text-3xl font-medium'>
+          <Icon name='package' class='me-2' />
+          {collection.title}
+        </h1>
+      )}
+      <p class='text-sm text-muted-foreground'>{collection.description}</p>
+      <p class='mt-2 text-sm text-muted-foreground'>Total posts: {collection.count}</p>
+      <div class='mt-4 flex gap-2 text-sm'>
+        <span class='rounded-full border bg-muted px-3 py-1'>
+          Oldest first
+        </span>
+        <a
+          href={page.currentPage === 1
+            ? `/collection/${collection.key}/newest`
+            : `/collection/${collection.key}/newest/${page.currentPage}`}
+          class='rounded-full border px-3 py-1 transition-colors hover:bg-muted'
+          data-astro-prefetch
+        >
+          Newest first
+        </a>
+      </div>
+    </div>
+
+    <section id='content' class='animate mt-8' aria-label='Collection post list'>
+      <ul class='flex flex-col gap-y-3 text-start'>
+        {page.data.map((post) => <PostPreview as='h2' {post} detailed />)}
+      </ul>
+      <Paginator currentPage={page.currentPage} lastPage={page.lastPage} url={page.url} />
+    </section>
+  </main>
+</PageLayout>

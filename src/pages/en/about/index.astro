@@ -1,0 +1,108 @@
+---
+import PageLayout from '@/layouts/CommonPage.astro'
+import AlgorithmShowcase from '@/components/about/AlgorithmShowcase.astro'
+import ToolSection from '@/components/about/ToolSection.astro'
+import { Comment } from '@/components/advanced'
+import { DistributionSection } from '@/components/user'
+
+const headings = [
+  { depth: 2, slug: 'distribution', text: 'Distribution' },
+  { depth: 2, slug: 'tools', text: 'Tools' },
+  { depth: 2, slug: 'copyright', text: 'Copyright' },
+  { depth: 2, slug: 'theme', text: 'Theme' }
+]
+
+const distributions = [
+  {
+    title: 'Vercel',
+    url: 'hana-blog.vercel.app',
+    platform: 'Vercel'
+  },
+  {
+    title: 'Vultr',
+    url: 'hana0721.top',
+    platform: 'Vultr'
+  },
+  {
+    title: 'GitHub Pages',
+    url: 'hana-blog.github.io',
+    platform: 'GitHub'
+  },
+  {
+    title: 'Cloudflare Pages',
+    url: 'hana-blog.pages.dev',
+    platform: 'Cloudflare'
+  }
+]
+---
+
+<PageLayout title='About' {headings} info='/about'>
+  <h2 id='distribution'>🌐 Website Distribution<a class='anchor' href='#distribution'>#</a></h2>
+  <p>
+    To provide a better browsing experience and improved reliability, this site is deployed across
+    multiple platforms. You can choose the mirror site that best suits your needs:
+  </p>
+  <DistributionSection class='mb-8 mt-6' {distributions} />
+  <p>
+    If you encounter access issues, we recommend trying another mirror site. All sites are kept
+    synchronized and updated.
+  </p>
+
+  <h2 id='tools'>🧰 Tools<a class='anchor' href='#tools'>#</a></h2>
+  <ToolSection
+    class='mb-5'
+    title='Productivity'
+    tools={[
+      {
+        name: 'VS Code',
+        description: 'Code Editor',
+        href: 'https://code.visualstudio.com/',
+        icon: '/icons/tools/vscode.svg'
+      },
+      {
+        name: 'Cursor',
+        description: 'AI-powered Code Editor',
+        href: 'https://cursor.com',
+        icon: '/icons/tools/cursor.svg'
+      },
+      {
+        name: 'Chrome',
+        description: 'Web Browser',
+        href: 'https://www.google.com/chrome/',
+        icon: '/icons/tools/chrome.svg'
+      },
+      {
+        name: 'Ubuntu',
+        description: 'Linux Distribution',
+        href: 'https://ubuntu.com',
+        icon: '/icons/tools/ubuntu.svg'
+      }
+    ]}
+  />
+
+  <h2 id='copyright'>📄 Copyright<a class='anchor' href='#copyright'>#</a></h2>
+  <p>
+    Unless otherwise stated, all original content and site design are licensed under the <a
+      href='https://creativecommons.org/licenses/by-nc-sa/4.0/'>CC BY-NC-SA 4.0</a
+    > license. This means you are free to share, copy, or adapt the work within the license scope,
+    as long as you give appropriate credit and do not use it for commercial purposes.
+  </p>
+  <p>
+    Most blog cover images on this site are sourced from publicly available artworks on Pixiv and
+    are linked to the original (Hero Image). Other images, icons, trademarks, or materials used on
+    this site belong to their respective rights holders. If you believe any content on this site
+    infringes your rights, please contact me and I will remove it promptly.
+  </p>
+  <img src='/icons/cc-by-nc-sa.svg' alt='CC BY-NC-SA 4.0 license badge' width='160' height='56' loading='lazy' decoding='async' />
+
+  <h2 id='theme'>🎨 Theme<a class='anchor' href='#theme'>#</a></h2>
+  <p>
+    This theme, Astro-Axi, is heavily modified based on Astro's <a href='https://astro-pure.js.org/docs'>Pure</a>, <a
+      href='https://github.com/chrismwilliams/astro-theme-cactus'>Cactus</a
+    >, and <a href='https://astro-theme-resume.vercel.app/'>Resume</a> themes. Changes include decoupling components from packages into Astro-native `components`, redesigning many UI modules, rewriting pages such as Tags, adding publication interfaces, fixing bugs (e.g., BackToTop counting), and supporting i18n.
+  </p>
+
+  <AlgorithmShowcase class='my-8' />
+
+  <Comment slot='bottom' />
+</PageLayout>

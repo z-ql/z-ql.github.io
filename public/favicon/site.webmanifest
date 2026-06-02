@@ -1,0 +1,10 @@
+{
+  "name": "zql",
+  "short_name": "zql",
+  "icons": [
+    { "src": "/favicon/favicon-256x256.png", "sizes": "256x256", "type": "image/png" }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
