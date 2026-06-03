@@ -4,6 +4,12 @@
       "id_name": "cf-links",
       "desc": "Common links included in circle friends",
       "link_list": [
+        {
+          "name": "Marsp1g",
+          "link": "https://marsp1g.github.io/",
+          "avatar": "https://marsp1g.github.io/img/avatar.jpg",
+          "intro": "监督写博客的小伙伴，主攻二进制安全"
+        }
       ]
     },
     {
