@@ -1,0 +1,106 @@
+---
+title: '创建图床'
+publishDate: 2026-06-09
+updatedDate: 2026-06-09
+description: '使用cloudflare+hugging创建图床（100G且免费）'
+category: 'tech'
+heroImage: { src: 'https://img.zql404.top/file/1780678849822_122026848_p0.jpg', color: '#8C8275' }
+pixivLink: '126839080'
+tags:
+  - 'tutorial'
+  - 'image'
+  - 'cloudflare'
+  - 'huggingface'
+  - 'website'
+---
+首先看[成果](https://img.zql404.top/)
+![image.png](https://img.zql404.top/file/1780679295790_image.png)
+感谢[大强同学](https://beta.w2solo.com/topics/6846?locale=en)的教程，本教程是在其基础上修正编写的。
+
+## 工具准备
+1. [github imgbed项目](https://github.com/MarSeventh/CloudFlare-ImgBed)：图床前端 
+2. [cloudflare](https://dash.cloudflare.com/)：图床前端的网站
+3. [cloudflare imgbed 技术文档](https://cfbed.sanyue.de/qa/)
+4. [huggingface](https://huggingface.co/)：存储照片的仓库
+https://cfbed.sanyue.de/en/deployment/configuration.html
+https://sharemoe.net/?VNK=9c05d62c
+https://beta.w2solo.com/topics/6846?locale=en
+
+## cloudflare pages 部署
+### 准备源码
+Fork [项目](https://github.com/MarSeventh/CloudFlare-ImgBed)到你的 GitHub：
+
+### 部署到 Cloudflare
+登录 Cloudflare，进入「计算和 AI」→「Workers and Pages」；
+在页面的右上角点击【创建应用程序】，然后点击下面的想要部署 Pages？的【开始按钮】。如下
+![](https://img.zql404.top/file/1780664858018_image.png)
+![](https://img.zql404.top/file/1780664962425_image.png)
+
+### 「开始使用」（导入现有 Git 存储库）
+![](https://img.zql404.top/file/1780665055815_image.png)
+
+选择刚 Fork 的「CloudFlare-ImgBed」项目，点击「开始设置」；
+
+![](https://img.zql404.top/file/1780665116514_image.png)
+
+自定义项目名称，构建命令填npm install，输出路径填写x 点击「保存并部署」
+![](https://img.zql404.top/file/1780665838780_image.png)
+![](https://img.zql404.top/file/1780665201558_image.png)
+### 配置 KV 数据库
+进入 Cloudflare「存储和数据库」→「Workers KV」，新建 KV 数据库，名称填img_url
+![image.png](https://img.zql404.top/file/1780665247011_image.png)
+
+回到部署好的项目→「设置」→「绑定」，添加 KV 绑定：
+变量名称：img_url
+KV命名空间：img_url
+![image.png](https://img.zql404.top/file/1780665295730_image.png)
+## 存储配置：HuggingFace
+### 创建 HuggingFace 空间
+注册登录 [HuggingFace](https://huggingface.co/)；
+
+进入控制面板→「新建空间」：
+
+空间名自定义；
+SDK 任选（推荐选 Docker 空项目）；
+硬件选择「FREE」，点击「Create Space」。
+![image.png](https://img.zql404.top/file/1780665441557_image.png)
+![image.png](https://img.zql404.top/file/1780665607507_image.png)
+![image.png](https://img.zql404.top/file/1780665622854_image.png)
+### 获取 Access Token
+进入 HuggingFace「设置」→「Access Tokens」→「Create New Token」；
+自定义 Token 名称，勾选「仓库读写权限」，生成后复制 Token。
+![image.png](https://img.zql404.top/file/1780665516272_image.png)
+![image.png](https://img.zql404.top/file/1780665555150_image.png)
+![image.png](https://img.zql404.top/file/1780665701894_image.png)
+### 配置图床后台
+访问图床后台：在部署好的域名后加/dashboard（如https://你的域名/dashboard）；
+进入「系统设置」→「上传设置」，添加 HF 渠道：
+![image.png](https://img.zql404.top/file/1780665898283_image.png)
+
+进入「系统设置」→「上传设置」，添加 HF 渠道：
+渠道名自定义；
+仓库名填「HuggingFace 用户名 / 空间名」（如ZhangSan/my-imgbed，可从空间页面地址栏获取）；
+填入刚才复制的 Access Token，点击保存；
+![image.png](https://img.zql404.top/file/1780665963562_image.png)
+
+进入「页面设置」→「客户端设置」，将默认上传渠道设为刚添加的 HF 渠道。
+![image.png](https://img.zql404.top/file/1780666126525_image.png)
+
+## 其他补充步骤
+在项目「设置」→「环境变量」中可添加以下配置（非必填）：
+
+BASIC_USER/BASIC_PASS：后台登录账号密码；
+AUTH_CODE：访问验证码；
+disable_telemetry：设为true可关闭遥测；
+AllowRandom：设为true可开启随机图 API（网址后缀加/random）。
+使用本地软件上传图片
+
+
+参考资料
+https://github.com/MarSeventh/CloudFlare-ImgBed
+
+https://dash.cloudflare.com/
+
+https://huggingface.co/
+保存后项目会自动重新部署，部署完成后可通过 Cloudflare 分配的xxx.pages.dev域名访问（建议绑定自有域名）。
+
