@@ -78,7 +78,6 @@ const [owner, repoName] = repo.split('/')
     animation-delay: 1s;
   }
 </style>
-
 <script>
   interface GithubProps {
     stargazers_count: number
@@ -90,19 +89,15 @@ const [owner, repoName] = repo.split('/')
   }
 
   class GithubCard extends HTMLElement {
-    async fetchGithub(repo: string): Promise<GithubProps | null> {
-      try {
-        const res = await fetch(`https://api.github.com/repos/${repo}`, {
-          referrerPolicy: 'no-referrer'
-        })
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`)
-        }
-        return (await res.json()) as GithubProps
-      } catch (e) {
-        console.error('Failed to fetch Github data:', e)
-        return null
+    // 1. 移除这里的 try...catch，让错误向上抛出
+    async fetchGithub(repo: string): Promise<GithubProps> {
+      const res = await fetch(`https://api.github.com/repos/${repo}`, {
+        referrerPolicy: 'no-referrer'
+      })
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`)
       }
+      return (await res.json()) as GithubProps
     }
 
     numberFormat(value: number): string {
@@ -114,9 +109,11 @@ const [owner, repoName] = repo.split('/')
 
     async connectedCallback() {
       if (!this.dataset.repo) return
+      
       try {
+        // 2. 这里不再需要 if (!data) return，因为失败会直接进入 catch
         const data = await this.fetchGithub(this.dataset.repo)
-        if (!data) return
+        
         ;(this.querySelector('#gh-stars') as HTMLElement).textContent = this.numberFormat(
           data.stargazers_count
         )
@@ -124,10 +121,14 @@ const [owner, repoName] = repo.split('/')
           data.forks
         )
         ;(this.querySelector('#gh-language') as HTMLElement).textContent = data.language || 'N/A'
-        ;(this.querySelector('#gh-description') as HTMLElement).textContent =
+        
+        const descEl = this.querySelector('#gh-description') as HTMLElement
+        descEl.textContent =
           typeof data.description === 'string'
             ? data.description.replace(/:[a-zA-Z0-9_]+:/g, '')
             : 'Description not set'
+        // 移除 gh-text 类，防止加载失败后依然有骨架屏动画
+        descEl.classList.remove('gh-text') 
 
         const licenseEl = this.querySelector('#gh-license') as HTMLElement
         if (data.license?.spdx_id) {
@@ -142,10 +143,23 @@ const [owner, repoName] = repo.split('/')
           avatarEl.style.backgroundColor = 'transparent'
         }
 
-        this.classList.remove('loading')
       } catch (e) {
         console.error('Error setting Github data:', e)
-        ;(this.querySelector('#gh-description') as HTMLElement).textContent = 'Failed to fetch data'
+        const descEl = this.querySelector('#gh-description') as HTMLElement
+        if (descEl) {
+           descEl.textContent = 'Failed to fetch data (Rate limit or repo not found)'
+           descEl.classList.remove('gh-text') 
+        }
+        
+        // 💡 新增：把报错时的问号替换成破折号或者 N/A
+        const errorPlaceholders = ['#gh-stars', '#gh-forks', '#gh-license', '#gh-language'];
+        errorPlaceholders.forEach(id => {
+          const el = this.querySelector(id) as HTMLElement;
+          if (el) el.textContent = '-';
+        });
+      } finally {
+        // 3. 关键：无论成功还是失败，最后一定要移除 loading 状态！
+        this.classList.remove('loading')
       }
     }
   }
