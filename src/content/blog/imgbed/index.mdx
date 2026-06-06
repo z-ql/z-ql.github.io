@@ -4,8 +4,7 @@ publishDate: 2026-06-09
 updatedDate: 2026-06-09
 description: '使用cloudflare+hugging创建图床（100G且免费）'
 category: 'tech'
-heroImage: { src: 'https://img.zql404.top/file/1780678849822_122026848_p0.jpg', color: '#8C8275' }
-pixivLink: '126839080'
+heroImage: { src: 'https://img.zql404.top/file/1780750002479_dariusz-sankowski-mj2NwYH3wBA-unsplash.jpg', color: '#8C8275' }
 tags:
   - 'tutorial'
   - 'image'
@@ -13,6 +12,9 @@ tags:
   - 'huggingface'
   - 'website'
 ---
+
+import GithubCard from '@/components/advanced/GithubCard.astro';
+
 首先看[成果](https://img.zql404.top/)
 ![image.png](https://img.zql404.top/file/1780679295790_image.png)
 感谢[大强同学](https://beta.w2solo.com/topics/6846?locale=en)的教程，本教程是在其基础上修正编写的。
@@ -29,7 +31,7 @@ https://beta.w2solo.com/topics/6846?locale=en
 ## cloudflare pages 部署
 ### 准备源码
 Fork [项目](https://github.com/MarSeventh/CloudFlare-ImgBed)到你的 GitHub：
-
+<GithubCard repo="MarSeventh/CloudFlare-ImgBed" />
 ### 部署到 Cloudflare
 登录 Cloudflare，进入「计算和 AI」→「Workers and Pages」；
 在页面的右上角点击【创建应用程序】，然后点击下面的想要部署 Pages？的【开始按钮】。如下
@@ -95,12 +97,5 @@ disable_telemetry：设为true可关闭遥测；
 AllowRandom：设为true可开启随机图 API（网址后缀加/random）。
 使用本地软件上传图片
 
-
-参考资料
-https://github.com/MarSeventh/CloudFlare-ImgBed
-
-https://dash.cloudflare.com/
-
-https://huggingface.co/
 保存后项目会自动重新部署，部署完成后可通过 Cloudflare 分配的xxx.pages.dev域名访问（建议绑定自有域名）。
 
