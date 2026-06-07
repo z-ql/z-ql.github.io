@@ -1,0 +1,98 @@
+---
+title: 'Creating an Image Bed'
+publishDate: 2026-06-09
+updatedDate: 2026-06-09
+description: 'Build a free image bed (100GB) with Cloudflare + Hugging Face'
+category: 'tech'
+heroImage: { src: 'https://img.zql404.top/file/1780750002479_dariusz-sankowski-mj2NwYH3wBA-unsplash.jpg', color: '#8C8275' }
+tags:
+  - 'tutorial'
+  - 'image'
+  - 'cloudflare'
+  - 'huggingface'
+  - 'website'
+---
+
+import {GithubCard,LinkPreview} from '@/components/advanced/';
+
+~~[Result](https://img.zql404.top/file/file/1780819209375_20200112222135_pdimg.webp)（jk）~~
+
+[Result](https://img.zql404.top/)
+
+Thanks to [大强同学](https://beta.w2solo.com/topics/6846?locale=en) for the original tutorial — this guide is revised and built upon it.
+
+## Tools You'll Need
+1. [GitHub Image Bed Frontend](https://github.com/MarSeventh/CloudFlare-ImgBed)
+2. [Cloudflare](https://dash.cloudflare.com/)
+3. [Cloudflare ImgBed Documentation](https://cfbed.sanyue.de/qa/)
+4. [Hugging Face (image storage)](https://huggingface.co/)
+
+## Deploy to Cloudflare Pages
+### Prepare the Source Code
+Fork the [project](https://github.com/MarSeventh/CloudFlare-ImgBed) to your GitHub:
+<GithubCard repo="MarSeventh/CloudFlare-ImgBed" />
+### Deploy to Cloudflare
+Log into Cloudflare and go to "Compute & AI" → "Workers and Pages";
+Click the [Create Application] button in the top right, then click the [Get Started] button under "Want to deploy Pages?" as shown below.
+![](https://img.zql404.top/file/1780664858018_image.png)
+![](https://img.zql404.top/file/1780664962425_image.png)
+
+### "Getting Started" (Import an Existing Git Repository)
+![](https://img.zql404.top/file/1780665055815_image.png)
+
+Select the "CloudFlare-ImgBed" project you just forked, then click "Begin Setup";
+
+![](https://img.zql404.top/file/1780665116514_image.png)
+
+Set a custom project name, enter `npm install` for the build command, set the output directory to `x`, then click "Save and Deploy".
+![](https://img.zql404.top/file/1780665838780_image.png)
+![](https://img.zql404.top/file/1780665201558_image.png)
+### Configure KV Database
+Go to Cloudflare "Storage & Databases" → "Workers KV", create a new KV database named `img_url`.
+![image.png](https://img.zql404.top/file/1780665247011_image.png)
+
+Go back to your deployed project → "Settings" → "Bindings", add a KV binding:
+Variable name: `img_url`
+KV namespace: `img_url`
+![image.png](https://img.zql404.top/file/1780665295730_image.png)
+## Storage Configuration: Hugging Face
+### Create a Hugging Face Space
+Sign up / log in to [Hugging Face](https://huggingface.co/);
+<LinkPreview href="https://huggingface.co/" />
+Go to the dashboard → "New Space":
+
+Choose a custom space name;
+Select any SDK (Docker empty project recommended);
+Choose the "FREE" hardware tier, then click "Create Space".
+![image.png](https://img.zql404.top/file/1780665441557_image.png)
+![image.png](https://img.zql404.top/file/1780665607507_image.png)
+![image.png](https://img.zql404.top/file/1780665622854_image.png)
+### Get an Access Token
+Go to Hugging Face "Settings" → "Access Tokens" → "Create New Token";
+Give the token a name, check "Repo read & write permissions", then copy the generated token.
+![image.png](https://img.zql404.top/file/1780665516272_image.png)
+![image.png](https://img.zql404.top/file/1780665555150_image.png)
+![image.png](https://img.zql404.top/file/1780665701894_image.png)
+### Configure the Image Bed Backend
+Access the image bed admin panel: append `/dashboard` to your deployed domain (e.g. `https://your-domain/dashboard`);
+Go to "System Settings" → "Upload Settings", add an HF channel:
+![image.png](https://img.zql404.top/file/1780665898283_image.png)
+
+Go to "System Settings" → "Upload Settings", add an HF channel:
+Choose a custom channel name;
+Set the repo name to `HuggingFace_username / space_name` (e.g. `ZhangSan/my-imgbed` — you can get it from the space page URL);
+Paste the Access Token you copied earlier, then click Save;
+![image.png](https://img.zql404.top/file/1780665963562_image.png)
+
+Go to "Page Settings" → "Client Settings" and set the default upload channel to the HF channel you just added.
+![image.png](https://img.zql404.top/file/1780666126525_image.png)
+
+## Additional Steps
+You can add the following optional environment variables under project "Settings" → "Environment Variables":
+
+- `BASIC_USER` / `BASIC_PASS`: admin panel login credentials;
+- `AUTH_CODE`: access verification code;
+- `disable_telemetry`: set to `true` to disable telemetry;
+- `AllowRandom`: set to `true` to enable the random image API (append `/random` to the URL).
+
+After saving, the project will redeploy automatically. Once deployment completes, you can access the image bed via the `xxx.pages.dev` domain assigned by Cloudflare (recommended: bind your own custom domain).
