@@ -13,21 +13,19 @@ tags:
   - 'website'
 ---
 
-import GithubCard from '@/components/advanced/GithubCard.astro';
-import LinkPreview from '@/components/advanced/LinkPreview.astro';
+import {GithubCard,LinkPreview} from '@/components/advanced/';
 
-首先看[成果](https://img.zql404.top/)
-![image.png](https://img.zql404.top/file/1780679295790_image.png)
+~~[成果](https://img.zql404.top/file/file/1780819209375_20200112222135_pdimg.webp)（不是）~~
+
+[成果](https://img.zql404.top/)
+
 感谢[大强同学](https://beta.w2solo.com/topics/6846?locale=en)的教程，本教程是在其基础上修正编写的。
 
 ## 工具准备
-1. [github imgbed项目](https://github.com/MarSeventh/CloudFlare-ImgBed)：图床前端 
-2. [cloudflare](https://dash.cloudflare.com/)：图床前端的网站
+1. [github imgbed前端项目](https://github.com/MarSeventh/CloudFlare-ImgBed)
+2. [cloudflare](https://dash.cloudflare.com/)
 3. [cloudflare imgbed 技术文档](https://cfbed.sanyue.de/qa/)
-4. [huggingface](https://huggingface.co/)：存储照片的仓库
-https://cfbed.sanyue.de/en/deployment/configuration.html
-https://sharemoe.net/?VNK=9c05d62c
-https://beta.w2solo.com/topics/6846?locale=en
+4. [huggingface存储照片](https://huggingface.co/)
 
 ## cloudflare pages 部署
 ### 准备源码
@@ -96,7 +94,6 @@ BASIC_USER/BASIC_PASS：后台登录账号密码；
 AUTH_CODE：访问验证码；
 disable_telemetry：设为true可关闭遥测；
 AllowRandom：设为true可开启随机图 API（网址后缀加/random）。
-使用本地软件上传图片
 
 保存后项目会自动重新部署，部署完成后可通过 Cloudflare 分配的xxx.pages.dev域名访问（建议绑定自有域名）。
 
