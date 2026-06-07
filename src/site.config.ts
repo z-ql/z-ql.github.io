@@ -8,8 +8,8 @@ export const theme: ThemeUserConfig = {
   author: '竹蜻蜓',
   author_en: 'zql',
   /** Description metadata for your website. Can be used in page metadata. */
-  description: '一个笨蛋学生',
-  description_en: 'A Silly Student',
+  description: 'do something interesting',
+  description_en: 'do something interesting',
   /** The default favicon for your site which should be a path to an image in the `public/` directory. */
   favicon: '/favicon/favicon.ico',
   /** Specify the default language for this site. */
