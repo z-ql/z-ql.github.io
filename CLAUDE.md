@@ -48,6 +48,10 @@ This is an Astro-based bilingual blog platform with a **custom integration syste
 ```
 src/components/
 ├── basic/        # Core UI (Header, Footer, ThemeProvider)
+├── home/         # Homepage modules (GitHub calendar, Blog stats, Sections)
+├── about/        # About page modules (Algorithm showcase, Tool section)
+├── projects/     # Projects page modules (Project cards, Sponsors)
+├── links/        # Links page modules (Friend list)
 ├── advanced/     # Feature components (Comments, GitHub cards, Link previews)
 ├── pages/        # Page-specific (TOC, Pagination, Article layout)
 └── user/         # Reusable UI (Cards, Buttons, Icons)
@@ -99,9 +103,8 @@ Central configuration that controls:
 - Use the `paper-reading-eba*` pages as the reference pattern for batch names and links.
 
 ### Image Hosting
-- When an image source comes from `https://Minakanmi-Yuki.github.io/picx-images-hosting/`,
-  store it in content as `https://pic.hana0721.top/` with the same filename/path.
-- Use the `pic.hana0721.top` domain for future images from that image host.
+- Use `https://img.zql404.top/` as the image hosting domain for blog images.
+- Images are stored via Cloudflare + Hugging Face image bed setup.
 
 ### Content Processing Pipeline
 1. Zod validation of frontmatter in `src/content.config.ts`
