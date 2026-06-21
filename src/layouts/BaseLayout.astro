@@ -37,6 +37,8 @@ const baseUrl = import.meta.env.BASE_URL || '/'
 
       gtag('config', 'G-23SWRT8LTH')
     </script>
+    <!-- APlayer 样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
   </head>
 
   <body class='flex justify-center bg-background'>
@@ -330,5 +332,91 @@ const baseUrl = import.meta.env.BASE_URL || '/'
         initializeWebGL()
       }
     </script>
+
+        <!-- 播放器容器（你可以把它放在任意位置，这里示例放在页面底部固定悬浮） -->
+    <div id="aplayer" class="aplayer-global"></div>
+
+    <!-- 引入 APlayer JS -->
+    <script is:inline src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+
+    <script is:inline>
+      // 等待 DOM 加载后初始化
+      document.addEventListener('DOMContentLoaded', function () {
+        const ap = new APlayer({
+          container: document.getElementById('aplayer'),
+          mini: false,            // 如果想用迷你模式可以改为 true
+          autoplay: false,        // 自动播放通常被浏览器阻止，建议 false
+          theme: '#a8d8ff',       // 主题色，可以换成你博客的强调色
+          loop: 'all',
+          order: 'random',
+          preload: 'auto',
+          volume: 0.7,
+          mutex: true,
+          listFolded: true,
+          listMaxHeight: '200px',
+          lrcType: 3,
+          audio: [
+            {
+              name: '新地球',
+              artist: '林俊杰',
+              url: 'https://m701.music.126.net/20260622002918/9d526febf3f53a64360fce90102926af/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/18694894310/30bd/15ea/61cd/338535f4ef8a8e211df3e403148f1f43.mp3',
+              cover: 'https://p2.music.126.net/2e__sKuIQsTSVVGr5Hk1FA==/109951170313536564.jpg',
+              lrc: 'https://api.mizore.cn/lrc/1330348068.lrc'  // 歌词（可选）
+            },
+            {
+              name: '晴天',
+              artist: '周杰伦',
+              url: 'https://music.163.com/song/media/outer/url?id=186016.mp3',
+              cover: 'https://p2.music.126.net/MVAGcZ5qUdWqo5PzgYqU9Q==/109951163140107035.jpg',
+              lrc: ''
+            }
+          ]
+        });
+        // --- 滚动方向监听，控制播放器显示/隐藏 ---
+        const playerEl = document.getElementById('aplayer');
+        let lastScrollTop = 0;
+
+        window.addEventListener('scroll', function() {
+          const st = window.pageYOffset || document.documentElement.scrollTop;
+          
+          if (st > lastScrollTop) {
+            // 向下滚动 → 隐藏
+            playerEl.classList.add('aplayer-hidden');
+          } else if (st < lastScrollTop) {
+            // 向上滚动 → 显示
+            playerEl.classList.remove('aplayer-hidden');
+          }
+          
+          // 滚动到页面最顶部时，强制显示（避免被隐藏逻辑覆盖）
+          if (st <= 0) {
+            playerEl.classList.remove('aplayer-hidden');
+          }
+          
+          lastScrollTop = st <= 0 ? 0 : st; // 避免移动端负值
+        }, { passive: true });
+      });
+    </script>
+
+    <style is:global>
+      /* 让播放器固定在右下角，你可以按需调整 */
+      .aplayer-global {
+        position: fixed;
+        left: 0px;
+        bottom: 0px;
+        z-index: 9999;
+        width: 300px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        border-radius: 8px;
+        overflow: hidden;
+        /* 过渡动画，让显示/隐藏更平滑 */
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+      /* 向下滚动时隐藏 */
+      .aplayer-hidden {
+        transform: translateY(120%);   /* 移出屏幕下方 */
+        opacity: 0;
+        pointer-events: none;         /* 隐藏时不可点击 */
+      }
+    </style>
   </body>
 </html>
