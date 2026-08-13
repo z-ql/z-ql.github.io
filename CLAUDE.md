@@ -103,8 +103,33 @@ Central configuration that controls:
 - Use the `paper-reading-eba*` pages as the reference pattern for batch names and links.
 
 ### Image Hosting
-- Use `https://img.zql404.top/` as the image hosting domain for blog images.
-- Images are stored via Cloudflare + Hugging Face image bed setup.
+Imgbed is CloudFlare-ImgBed + HuggingFace (100G free), served at `https://img.zql404.top/`;
+setup tutorial lives in `src/content/blog/imgbed/`. API docs: `https://cfbed.sanyue.de/api/`
+(pages like `/api/upload.html`, `/api/list.html`, `/api/delete.html`).
+
+**API essentials** (management endpoints need `Authorization: Bearer <API Token>`; create in
+admin 系统设置 → 安全设置 → API Token 管理, shown in full only once):
+- Upload: `POST /upload?uploadFolder=<subdir>&uploadNameType=origin&returnFormat=full`,
+  multipart `file` field. `uploadFolder` targets a directory (Chinese / multi-level OK, e.g.
+  `博客/创建图床`); `uploadNameType=origin` keeps the filename (default prepends a timestamp);
+  `returnFormat=full` returns the absolute URL.
+- List: `GET /api/manage/list?count=-1&recursive=true`.
+- Delete: `GET /api/manage/delete/{path}` per file. **Batch `POST /api/manage/delete/batch`
+  is broken on this deployment** (treated as deleting a single file named "batch", returns a
+  fake success) — delete files one by one.
+
+**Gotchas**:
+- Chinese folder/file names in read URLs must be percent-encoded (e.g. `博客/创建图床` →
+  `%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A`).
+- After deletion an old URL may still return 200 (Cloudflare edge cache ~30 days); add a
+  random query param to confirm it is really gone.
+- Naming convention: Chinese folder names (`博客/<文章名>/`), English file names
+  `<slug>-figN.ext`.
+
+**Reorg script**: `scripts/imgbed-organize.mjs` with phases `download / upload / verify /
+delete / updaterefs`; reads the token from env `IMGBED_TOKEN` (never write it to a file).
+Used to rename images, re-upload into a folder structure, update blog references, and delete
+old files.
 
 ### Content Processing Pipeline
 1. Zod validation of frontmatter in `src/content.config.ts`
