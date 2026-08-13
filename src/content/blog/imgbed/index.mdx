@@ -4,7 +4,7 @@ publishDate: 2026-06-09
 updatedDate: 2026-06-09
 description: '使用cloudflare+hugging创建图床（100G且免费）'
 category: 'tech'
-heroImage: { src: 'https://img.zql404.top/file/1780750002479_dariusz-sankowski-mj2NwYH3wBA-unsplash.jpg', color: '#8C8275' }
+heroImage: { src: 'https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig1.jpg', color: '#8C8275' }
 tags:
   - 'tutorial'
   - 'image'
@@ -15,7 +15,7 @@ tags:
 
 import {GithubCard,LinkPreview} from '@/components/advanced/';
 
-~~[成果](https://img.zql404.top/file/file/1780819209375_20200112222135_pdimg.webp)（不是）~~
+~~[成果](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig19.webp)（不是）~~
 
 [成果](https://img.zql404.top/)
 
@@ -34,27 +34,27 @@ Fork [项目](https://github.com/MarSeventh/CloudFlare-ImgBed)到你的 GitHub�
 ### 部署到 Cloudflare
 登录 Cloudflare，进入「计算和 AI」→「Workers and Pages」；
 在页面的右上角点击【创建应用程序】，然后点击下面的想要部署 Pages？的【开始按钮】。如下
-![](https://img.zql404.top/file/1780664858018_image.png)
-![](https://img.zql404.top/file/1780664962425_image.png)
+![](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig2.png)
+![](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig3.png)
 
 ### 「开始使用」（导入现有 Git 存储库）
-![](https://img.zql404.top/file/1780665055815_image.png)
+![](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig4.png)
 
 选择刚 Fork 的「CloudFlare-ImgBed」项目，点击「开始设置」；
 
-![](https://img.zql404.top/file/1780665116514_image.png)
+![](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig5.png)
 
 自定义项目名称，构建命令填npm install，输出路径填写x 点击「保存并部署」
-![](https://img.zql404.top/file/1780665838780_image.png)
-![](https://img.zql404.top/file/1780665201558_image.png)
+![](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig6.png)
+![](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig7.png)
 ### 配置 KV 数据库
 进入 Cloudflare「存储和数据库」→「Workers KV」，新建 KV 数据库，名称填img_url
-![image.png](https://img.zql404.top/file/1780665247011_image.png)
+![image.png](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig8.png)
 
 回到部署好的项目→「设置」→「绑定」，添加 KV 绑定：
 变量名称：img_url
 KV命名空间：img_url
-![image.png](https://img.zql404.top/file/1780665295730_image.png)
+![image.png](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig9.png)
 ## 存储配置：HuggingFace
 ### 创建 HuggingFace 空间
 注册登录 [HuggingFace](https://huggingface.co/)；
@@ -64,28 +64,28 @@ KV命名空间：img_url
 空间名自定义；
 SDK 任选（推荐选 Docker 空项目）；
 硬件选择「FREE」，点击「Create Space」。
-![image.png](https://img.zql404.top/file/1780665441557_image.png)
-![image.png](https://img.zql404.top/file/1780665607507_image.png)
-![image.png](https://img.zql404.top/file/1780665622854_image.png)
+![image.png](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig10.png)
+![image.png](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig11.png)
+![image.png](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig12.png)
 ### 获取 Access Token
 进入 HuggingFace「设置」→「Access Tokens」→「Create New Token」；
 自定义 Token 名称，勾选「仓库读写权限」，生成后复制 Token。
-![image.png](https://img.zql404.top/file/1780665516272_image.png)
-![image.png](https://img.zql404.top/file/1780665555150_image.png)
-![image.png](https://img.zql404.top/file/1780665701894_image.png)
+![image.png](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig13.png)
+![image.png](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig14.png)
+![image.png](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig15.png)
 ### 配置图床后台
 访问图床后台：在部署好的域名后加/dashboard（如https://你的域名/dashboard）；
 进入「系统设置」→「上传设置」，添加 HF 渠道：
-![image.png](https://img.zql404.top/file/1780665898283_image.png)
+![image.png](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig16.png)
 
 进入「系统设置」→「上传设置」，添加 HF 渠道：
 渠道名自定义；
 仓库名填「HuggingFace 用户名 / 空间名」（如ZhangSan/my-imgbed，可从空间页面地址栏获取）；
 填入刚才复制的 Access Token，点击保存；
-![image.png](https://img.zql404.top/file/1780665963562_image.png)
+![image.png](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig17.png)
 
 进入「页面设置」→「客户端设置」，将默认上传渠道设为刚添加的 HF 渠道。
-![image.png](https://img.zql404.top/file/1780666126525_image.png)
+![image.png](https://img.zql404.top/file/%E5%8D%9A%E5%AE%A2/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BA%8A/imgbed-fig18.png)
 
 ## 其他补充步骤
 在项目「设置」→「环境变量」中可添加以下配置（非必填）：
