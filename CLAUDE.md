@@ -92,15 +92,18 @@ Central configuration that controls:
    comment: true
    ```
 
-### Research Paper Reading Pages
-- Research-category paper reading pages that list papers with `ArxivRating` should contain
-  at most 25 papers per page.
-- Fill the current numbered page to 25 papers before creating the next page; do not split a
-  series early just by subtopic if the current page has room.
-- When a topic exceeds 25 papers, put only the overflow into the next numbered batch page,
-  such as `paper-reading-cv2`, and add a `ManualTOC` batch navigator on every page in that
-  series.
-- Use the `paper-reading-eba*` pages as the reference pattern for batch names and links.
+### Research Paper Reading Pages (文献阅读笔记)
+- Literature notes live in numbered batch pages `src/content/blog/paper-reading-N/index.mdx`
+  (e.g. `paper-reading-1`), all with `category: 'research'` so they aggregate under
+  `/blog/research`.
+- Each batch page lists papers as `<ArxivRating id='…' tldr='…' rank={N}>` cards, with the
+  note written in the card's slot. `Rank` is 1–5 stars; see `<RatingCriteria />` for the scale.
+- **At most 25 papers per page.** Fill the current numbered page to 25 before creating the
+  next; don't split early by subtopic. Put only the overflow into the next `paper-reading-N+1`.
+- **Batch navigator**: the ManualTOC is driven by a shared data source —
+  `src/data/paperReading.ts` (`paperReadingCategories`). When adding a batch page, append one
+  entry there (every page's ManualTOC updates automatically) and copy `paper-reading-1` as the
+  new page. Reference: `paper-reading-1/index.mdx`.
 
 ### Image Hosting
 Imgbed is CloudFlare-ImgBed + HuggingFace (100G free), served at `https://img.zql404.top/`;
