@@ -131,6 +131,25 @@ delete / updaterefs`; reads the token from env `IMGBED_TOKEN` (never write it to
 Used to rename images, re-upload into a folder structure, update blog references, and delete
 old files.
 
+### Adding Music (Blog Music Player)
+The blog has a fixed-bottom APlayer widget. Music is fully self-hosted: mp3s live in
+`public/music/audio/`, and cover/lyrics are extracted from the mp3's ID3 tags at build-setup
+time — not stored separately by hand.
+
+**Steps to add a song**:
+1. Drop the mp3 into `public/music/audio/` (any filename; mp3 should embed cover + lyrics).
+2. Run `npm run music:extract` (alias for `node scripts/extract-music.mjs`, uses `node-id3`).
+   It reads each mp3's ID3 tags, renames it to `歌手 - 歌名.mp3`, extracts the cover (APIC) →
+   `public/music/cover/<name>.jpg`, lyrics (USLT) → `public/music/lrc/<name>.lrc`, and
+   regenerates `public/music/playlist.json` (array of `{name, artist, url, cover, lrc}`).
+3. Refresh the page — the player (in `src/layouts/BaseLayout.astro`, `lrcType: 3`) picks up
+   the new entry automatically.
+
+Notes:
+- `cover/` and `lrc/` are fully script-managed (wiped and regenerated each run); don't edit them by hand.
+- If an mp3 has no lyrics frame, it's extracted without a `.lrc` and the `lrc` field is omitted.
+- Run `npm run music:extract` (not `bun`), since `bun` may not be installed on this machine.
+
 ### Content Processing Pipeline
 1. Zod validation of frontmatter in `src/content.config.ts`
 2. Remark plugins for markdown enhancement
