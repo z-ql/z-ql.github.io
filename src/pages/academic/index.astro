@@ -15,13 +15,13 @@ const publications = [
     authors: [
       { name: 'Yuhao Luo', isEqual: true },
       { name: 'Qinglin Zhong', isEqual: true, isMe: true },
-      { name: 'Xing Peng', role: 'corresponding' },
+      { name: 'Xing Peng', role: 'corresponding' as const },
       { name: 'Zhenliang Liu' }
     ],
     venue: 'Optics Express',
     year: '2026',
-    type: 'journal',
-    status: 'published',
+    type: 'journal' as const,
+    status: 'published' as const,
     abstract:
       'Underwater polarization imaging provides physical cues to separate target-reflected light from backscattered light. LDPFNet is a lightweight dual-stage polarization fusion network that first performs global descattering via a polarization-guided encoder–decoder using intensity, DoLP, and AoP images, then refines high-frequency details at full resolution. It reaches 30.9521 dB PSNR and 0.8713 SSIM on public and natural underwater datasets with only 6.606 M parameters.',
     links: [
