@@ -7,7 +7,7 @@
   <audio preload='auto'></audio>
 
   <div class='mc-capsule' id='mc-capsule'>
-    <button class='mc-cover' data-album-cover type='button' aria-label='Play/Pause' aria-pressed='false'></button>
+    <button class='mc-cover' data-album-cover type='button' aria-label='Expand/Collapse' aria-pressed='false'></button>
 
     <div class='mc-collapsed-info'>
       <div class='mc-collapsed-title' id='mc-collapsed-title'></div>
@@ -892,7 +892,6 @@
         btnPlay.innerHTML = playing ? icons.pause : icons.play
         btnMute.innerHTML = isMuted || volume === 0 ? icons.muted : icons.mute
         capsule.classList.toggle('mc-playing', playing)
-        cover.setAttribute('aria-pressed', String(playing))
       }
       function updateUI() {
         const track = playlist[currentIndex]
@@ -962,6 +961,7 @@
         capsule.classList.toggle('mc-expanded', expanded)
         songInfo.classList.toggle('mc-visible', expanded)
         controls.classList.toggle('mc-visible', expanded && hovered)
+        cover.setAttribute('aria-pressed', String(expanded))
       }
       function togglePlaylist(force) {
         playlistOpen = force !== undefined ? force : !playlistOpen
@@ -979,8 +979,8 @@
       /* ---- events ---- */
       cover.addEventListener('click', (e) => {
         e.stopPropagation()
-        if (audio.paused) audio.play().catch(() => {})
-        else audio.pause()
+        expanded = !expanded
+        syncExpand()
       })
       collapsedIcon.addEventListener('click', (e) => {
         e.stopPropagation()
