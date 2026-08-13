@@ -1,0 +1,23 @@
+[
+  {
+    "name": "句号",
+    "artist": "G.E.M.邓紫棋",
+    "url": "/music/audio/G.E.M.邓紫棋 - 句号.mp3",
+    "cover": "/music/cover/G.E.M.邓紫棋 - 句号.jpg",
+    "lrc": "/music/lrc/G.E.M.邓紫棋 - 句号.lrc"
+  },
+  {
+    "name": "One Last Kiss",
+    "artist": "宇多田光",
+    "url": "/music/audio/宇多田光 - One Last Kiss.mp3",
+    "cover": "/music/cover/宇多田光 - One Last Kiss.jpg",
+    "lrc": "/music/lrc/宇多田光 - One Last Kiss.lrc"
+  },
+  {
+    "name": "新地球",
+    "artist": "林俊杰",
+    "url": "/music/audio/林俊杰 - 新地球.mp3",
+    "cover": "/music/cover/林俊杰 - 新地球.jpg",
+    "lrc": "/music/lrc/林俊杰 - 新地球.lrc"
+  }
+]

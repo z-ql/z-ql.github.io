@@ -21,6 +21,7 @@
     "quality": "npm run lint && npm run sync && npm run type:check && npm run format",
     "yijiansilian": "npm run quality",
     "clean": "rm -rf .astro .vercel dist .wrangler",
+    "music:extract": "node scripts/extract-music.mjs",
     "clean:all": "npm run clean && rm -rf node_modules"
   },
   "dependencies": {
@@ -61,6 +62,7 @@
     "eslint": "^9.39.1",
     "eslint-plugin-astro": "^1.5.0",
     "hastscript": "^9.0.1",
+    "node-id3": "^0.2.9",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.14",
@@ -78,7 +80,7 @@
   "overrides": {
     "@emmetio/css-parser": "0.5.0"
   },
-"pnpm": {
+  "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild",
       "sharp",
